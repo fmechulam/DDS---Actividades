@@ -1,0 +1,82 @@
+@startuml
+
+Transeunte  -->"*" Cuidador
+Transeunte o-left- Disponibilidad
+Transeunte o-up- CuidadoresDisponibles
+Transeunte --> Direccion
+Transeunte --> Sexo
+Transeunte --> FormasDeReaccion
+
+AlertarACuidadores ..|> FormasDeReaccion
+AlertarAPolicia ..|> FormasDeReaccion
+LlamarAUsuario ..|> FormasDeReaccion
+FalsaAlarma ..|> FormasDeReaccion
+
+Cuidador --> Sexo
+Cuidador --> Direccion
+
+class Transeunte {
+    -nombre                     : String
+    -apellido                   : String
+    -direccion                  : Direccion
+    -edad                       : Integer
+    -sexo                       : Sexo
+    -cuidadoresDisponibles      : cuidadoresDisponibles
+    -puedeRecibirNotificaciones : Disponibilidad
+    -reaccionFrenteIncidente    : FormasDeReaccion
+
+    +viajar(Direccion posicionActual, Direccion destino, List<Cuidador> cuidadores)
+    +comenzar(Direccion posicionActual, Direccion destino)
+    +finalizar()
+}
+
+interface FormasDeReaccion {
+    +reaccionar()
+}
+
+class AlertarACuidadores {
+    +reaccionar()
+}
+
+class AlertarAPolicia {
+    +reaccionar()
+}
+
+class LlamarAUsuario {
+    +reaccionar()
+}
+
+class FalsaAlarma {
+    +reaccionar()
+}
+
+class CuidadoresDisponibles {
+    -ciudadoresDisponibles : List<Cuidador>
+}
+
+class Cuidador {
+    -nombre     : String
+    -apellido   : String
+    -direccion  : Direccion
+    -edad       : Integer
+    -sexo       : Sexo
+}
+
+class Direccion {
+    -calle        : String
+    -altura       : int
+    -piso         : int
+    -codigoPostal : Integer
+}
+
+enum Sexo {
+    MASCULINO
+    FEMENINO
+    NOBINARIO
+}
+
+class Disponibilidad {
+    -estaViajando : boolean
+}
+
+@enduml
